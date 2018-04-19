@@ -1,0 +1,10 @@
+$large-screen: 1824px;
+$laptop-screen: 1224px;
+$tablet-screen: 768px;
+$mobile-screen: 332px;
+
+@mixin hd-screen {
+	@media (max-width: #${large-screen}) and (min-width: #${large-screen + 1px}) {
+		@content;
+	}
+}
