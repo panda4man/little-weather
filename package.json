@@ -11,10 +11,12 @@
     },
     "devDependencies": {
         "axios": "^0.18",
+        "bluebird": "^3.5.1",
         "cross-env": "^5.1",
         "flexboxgrid-sass": "^8.0.5",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
+        "moment": "^2.22.1",
         "popper.js": "^1.12",
         "vue": "^2.5.7"
     }

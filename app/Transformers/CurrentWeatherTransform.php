@@ -15,11 +15,23 @@ class CurrentWeatherTransform extends TransformerAbstract
     public function transform($payload = [])
     {
         $data = [
-            'time'              => $payload['time'],
-            'summary'           => $payload['summary'],
-            'icon'              => $payload['icon'],
-            'temperature'       => $payload['temperature'],
+            'cloud_cover'      => $payload['cloudCover'],
+            'humidity'         => $payload['humidity'],
+            'icon'             => $payload['icon'],
+            'precipitation'    => [
+                'intensity'   => $payload['precipIntensity'],
+                'probability' => $payload['precipProbability'],
+                'type'        => isset($payload['precipType']) ? $payload['precipType'] : null,
+            ],
+            'summary'          => $payload['summary'],
+            'temperature'      => $payload['temperature'],
             'temperature_feel' => $payload['apparentTemperature'],
+            'time'             => $payload['time'],
+            'wind'             => [
+                'speed'   => $payload['windSpeed'],
+                'gust'    => $payload['windGust'],
+                'bearing' => $payload['windBearing'],
+            ],
         ];
 
         return $data;
