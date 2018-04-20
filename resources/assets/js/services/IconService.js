@@ -11,9 +11,9 @@ export default class IconService {
 
         let light = 0;
 
-        if(now.isBefore(this.sunset) && now.isAfter(this.sunrise)) {
+        if(this.now.isBefore(this.sunset) && this.now.isAfter(this.sunrise)) {
             light = 1;
-        } else if (now.isBefore(this.sunrise) || now.isAfter(this.sunrise)) {
+        } else if (this.now.isBefore(this.sunrise) || this.now.isAfter(this.sunrise)) {
             light = -1;
         }
 

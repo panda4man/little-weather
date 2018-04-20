@@ -21,7 +21,7 @@ class DailyWeatherTransform extends TransformerAbstract
             'precipitation' => [
                 'intensity'   => $payload['precipIntensity'],
                 'probability' => $payload['precipProbability'],
-                'type'        => $payload['precipType'],
+                'type'        => isset($payload['precipType']) ? $payload['precipType'] : null,
             ],
             'summary'       => $payload['summary'],
             'sun'           => [
