@@ -9,6 +9,7 @@ class HourlyTransformer extends TransformerAbstract
     /**
      * A Fractal transformer.
      *
+     * @param array $payload
      * @return array
      */
     public function transform($payload = [])

@@ -9,6 +9,7 @@ class BaseTransformer extends TransformerAbstract
     /**
      * A Fractal transformer.
      *
+     * @param null $response
      * @return array
      */
     public function transform($response = null)

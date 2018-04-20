@@ -4,8 +4,7 @@
             <img class="weather-icon" :src="icon" v-if="icon">
         </div>
         <div v-if="http.location">Loading the location...</div>
-        <pre v-if="currentWeather">{{currentWeather}}</pre>
-        <pre v-if="todayWeather">{{todayWeather}}</pre>
+        <pre v-if="weather">{{weather}}</pre>
     </div>
 </template>
 
@@ -23,8 +22,7 @@
                 http: {
                     location: false
                 },
-                currentWeather: null,
-                todayWeather: null,
+                weather: null,
                 interval: null
             }
         },
@@ -33,55 +31,49 @@
             this.iconService = new IconService;
             this.weatherService = new WeatherService(position);
 
+            /**
+             * Only init weather service if we don't have the user's location
+             */
             if(position != null && position !== '{}') {
                 position = JSON.parse(position);
-                this.updateCurrentWeather();
-                this.updateTodayWeather();
+                this.refreshWeather();
             } else {
                 this.http.location = true;
 
                 this.weatherService.init().then(res => {
                     this.http.location = false;
-                    this.updateCurrentWeather();
-                    this.updateTodayWeather();
+                    this.refreshWeather();
                 });
             }
 
             // Update current weather every 5 minutes
             this.interval = setInterval(() => {
-                this.updateCurrentWeather();
-                this.updateTodayWeather();
+                this.refreshWeather();
             }, 1000 * 60 * 5);
         },
         methods: {
-            updateCurrentWeather() {
-                this.weatherService.current().then(res => {
-                    this.currentWeather = res.data.data;
-                }).catch(res => {
-                    console.log(res);
-                });
-            },
-            updateTodayWeather() {
-                this.weatherService.today().then(res => {
-                    this.todayWeather = res.data.data;
-
+            refreshWeather() {
+                this.weatherService.weather().then(data => {
+                    this.weather = data;
                     this.updateIcon();
                 }).catch(res => {
                     console.log(res);
                 });
             },
             updateIcon() {
-                if(!this.todayWeather) {
+                if(!this.weather) {
                     return false;
                 }
 
+                let today = this.weather.daily.data[0];
+
                 this.icon = this.iconService.icon(
-                    this.todayWeather.precipitation.probability,
-                    this.todayWeather.time,
-                    this.todayWeather.precipitation.type,
-                    this.todayWeather.sun.set,
-                    this.todayWeather.sun.rise,
-                    this.todayWeather.cloud_cover
+                    today.precipitation.probability,
+                    today.time,
+                    today.precipitation.type,
+                    today.sun.set,
+                    today.sun.rise,
+                    today.cloud_cover
                 );
             }
         },

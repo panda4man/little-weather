@@ -21,8 +21,6 @@ export default class WeatherService {
                     lat: position.coords.latitude,
                     lon: position.coords.longitude
                 };
-                console.log(this.position);
-                console.log(JSON.stringify(this.position));
 
                 localStorage.setItem('position', JSON.stringify(this.position));
 
@@ -32,43 +30,22 @@ export default class WeatherService {
     }
 
     /**
-     * Fetch the current weather conditions
+     * Fetch the updated weather conditions
      */
-    current() {
+    weather() {
         if (!this.position)
             throw new Error("Position has not been initialized");
 
         return new Bluebird((resolve, reject) => {
-            Vue.prototype.$http.get('/api/weather/current', {
+            Vue.prototype.$http.get('/api/weather', {
                 params: {
                     lat: this.position.lat,
                     lon: this.position.lon
                 }
             }).then(res => {
-                resolve(res);
+                resolve(res.data);
             }).catch(res => {
-                reject(null);
-            });
-        });
-    }
-
-    /**
-     * Fetch the weather for today
-     */
-    today() {
-        if (!this.position)
-            throw new Error("Position has not been initialized");
-
-        return new Bluebird((resolve, reject) => {
-            Vue.prototype.$http.get('/api/weather/today', {
-                params: {
-                    lat: this.position.lat,
-                    lon: this.position.lon
-                }
-            }).then(res => {
-                resolve(res);
-            }).catch(res => {
-                reject(null);
+                reject(res.response);
             });
         });
     }

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Transformers\DarkSky\BaseTransformer;
-use GuzzleHttp\Exception\BadResponseException;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\BadResponseException;
 
 class DarkSkyController extends Controller
 {
@@ -33,8 +32,6 @@ class DarkSkyController extends Controller
         if(is_null($res)) {
             return response()->json(['error' => 'An error occurred with the DarkSky API'], 400);
         }
-
-        dd($res);
 
         return response()->json($res);
     }
