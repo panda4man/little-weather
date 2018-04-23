@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import Vue from 'vue';
+import momenttz from 'moment-timezone';
 
 Vue.prototype.$http = Axios;
 Vue.prototype.$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

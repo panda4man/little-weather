@@ -1,12 +1,12 @@
 import moment from 'moment';
 
 export default class IconService {
-    icon(probability, unix, precip_type, sunset, sunrise, cloudy) {
-        this.now = moment(unix).local();
+    icon(probability, unix, precip_type, sunset, sunrise, cloudy, tz) {
+        this.now = moment.unix(unix);
         this.probability = probability;
         this.type = precip_type; //rain, snow, sleet
-        this.sunset = moment(sunset).local();
-        this.sunrise = moment(sunrise).local();
+        this.sunset = moment.unix(sunset);
+        this.sunrise = moment.unix(sunrise);
         this.cloudy = cloudy;
 
         let light = 0;

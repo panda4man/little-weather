@@ -23,6 +23,7 @@ class BaseTransformer extends TransformerAbstract
         $res['currently'] = [];
         $res['hourly'] = [];
         $res['daily'] = [];
+        $res['timezone'] = $response['timezone'];
 
         if(isset($response['currently'])) {
             $res['currently'] = fractal()->item($response['currently'], new CurrentTransformer)->toArray();

@@ -1,0 +1,60 @@
+.weather {
+  color: white;
+
+  .weather-icon {
+    fill: #fff;
+
+    @include hd-screen {
+      width: 300px;
+      height: 300px;
+    }
+
+    @include desktop-screen {
+      width: 300px;
+      height: 300px;
+    }
+
+    @include tablet-screen {
+      width: 300px;
+      height: 300px;
+    }
+
+    @include mobile-screen {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  .high-low {
+    display: flex;
+    justify-content: center;
+    font-size: 1.3em;
+
+    .separator {
+      padding: 0 10px;
+    }
+  }
+
+  .current-temp {
+    display: flex;
+    justify-content: center;
+
+    .temp {
+      font-size: 4.8em;
+    }
+  }
+
+  .forecast {
+    display: flex;
+    justify-content: space-between;
+
+    .day {
+      .temps {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

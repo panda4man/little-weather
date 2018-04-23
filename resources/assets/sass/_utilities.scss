@@ -22,6 +22,18 @@
 	margin-left: 30px;
 }
 
+.mt-sm {
+	margin-top: 10px;
+}
+
+.mt-md {
+	margin-top: 20px;
+}
+
+.mt-lg {
+	margin-top: 30px;
+}
+
 .mv-sm {
 	margin-right: 10px;
 	margin-left: 10px;
@@ -50,4 +62,16 @@
 .mh-lg {
 	margin-top: 30px;
 	margin-bottom: 30px;
+}
+
+.d-flex {
+	display: flex;
+}
+
+.jc-center {
+	justify-content: center;
+}
+
+.ai-center {
+	align-items: center;
 }
