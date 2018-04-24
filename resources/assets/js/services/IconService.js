@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default class IconService {
-    icon(probability, unix, precip_type, sunset, sunrise, cloudy, tz) {
+    icon(probability, unix, precip_type, sunset, sunrise, cloudy) {
         this.now = moment.unix(unix);
         this.probability = probability;
         this.type = precip_type; //rain, snow, sleet

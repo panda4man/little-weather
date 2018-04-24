@@ -2,25 +2,21 @@
     <div class="row weather">
         <div class="col-xs-12 col-sm-12">
             <div class="row">
-                <div class="col-xs-12 col-sm-12">
+                <div class="col-xs-6">
                     <div class="d-flex jc-center">
                         <img class="weather-icon" :src="icon" v-if="icon">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12" v-if="weather">
-                    <div class="current-temp">
-                        <div class="temp">{{weather.currently.temperature.toFixed(0)}}&deg;</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12" v-if="today">
-                    <div class="high-low">
-                        <div class="high">{{today.temperature.high.toFixed(0)}}</div>
-                        <div class="separator">/</div>
-                        <div class="low">{{today.temperature.low.toFixed(0)}}</div>
+                <div class="col-xs-6">
+                    <div>
+                        <div class="current-temp" v-if="weather">
+                            <div class="temp">{{weather.currently.temperature.toFixed(0)}}&deg;</div>
+                        </div>
+                        <div class="high-low" v-if="today">
+                            <div class="high">{{today.temperature.high.toFixed(0)}}</div>
+                            <div class="separator">/</div>
+                            <div class="low">{{today.temperature.low.toFixed(0)}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,17 +25,13 @@
                     <div class="forecast">
                         <div class="day" v-for="day in forecast">
                             <div class="temps">
+                                <div class="day mb-sm">{{dayFromUnix(day.time)}}</div>
+                                <div><img class="icon" :src="forecastIcon(day)"></div>
                                 <div class="high">{{day.temperature.high.toFixed(0)}}</div>
                                 <div class="low">{{day.temperature.low.toFixed(0)}}</div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div v-if="http.location">Loading the location...</div>
-                    <pre v-if="weather">{{weather}}</pre>
                 </div>
             </div>
         </div>
@@ -49,6 +41,7 @@
 <script>
     import IconService from '../services/IconService';
     import WeatherService from '../services/WeatherService';
+    import moment from 'moment';
 
     export default {
         iconService: null,
@@ -114,9 +107,26 @@
                     current.precipitation.type,
                     today.sun.set,
                     today.sun.rise,
-                    current.cloud_cover,
-                    this.weather.timezone
+                    current.cloud_cover
                 );
+            },
+            dayFromUnix(unix) {
+                let m = moment.unix(unix);
+
+                return m.format('ddd');
+            },
+            forecastIcon(day) {
+                let t = moment.unix(day.time).add(8, 'hours').format('X');
+                let icon = this.iconService.icon(
+                    day.precipitation.probability,
+                    t,
+                    day.precipitation.type,
+                    day.sun.set,
+                    day.sun.rise,
+                    day.cloud_cover
+                );
+
+                return icon;
             }
         },
         beforeDestroy() {
@@ -134,7 +144,7 @@
             },
             forecast() {
                 if(this.weather && this.weather.daily) {
-                    return this.weather.daily.data.slice(0, 6);
+                    return this.weather.daily.data.slice(0, 7);
                 }
 
                 return [];
